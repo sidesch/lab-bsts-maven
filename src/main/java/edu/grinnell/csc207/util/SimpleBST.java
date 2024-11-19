@@ -9,8 +9,8 @@ import java.util.function.BiConsumer;
 /**
  * A simple implementation of binary search trees.
  *
- * @author Your Name Here
- * @author Your Name Here
+ * @author Princess Alexander
+ * @author Sarah Deschamps
  * @author Samuel A. Rebelsky
  *
  * @param <K>
@@ -40,7 +40,7 @@ public class SimpleBST<K, V> implements SimpleMap<K, V> {
   int size;
 
   /**
-   * A cached value (useful in some circumstances.
+   * A cached value (useful in some circumstances).
    */
   V cachedValue;
 
@@ -89,8 +89,30 @@ public class SimpleBST<K, V> implements SimpleMap<K, V> {
    */
   @Override
   public V set(K key, V value) {
-    return null;        // STUB
+    insert(root, key, value);
+    return cachedValue;    
   } // set(K, V)
+
+  /**
+   * Set helper
+   * 
+   */
+  private BSTNode<K,V> insert(BSTNode<K,V> node, K key, V value){
+    if (node == null){
+      return new BSTNode<K,V>(key,value);
+    }
+    else if (order.compare(key, node.key) < 0){
+      node.left = insert(node.left, key, value);
+    }
+    else if (order.compare(key, node.key) > 0){
+      node.left = insert(node.right, key, value);
+    }
+    else {
+      this.cachedValue = node.value;
+      node.value = value;
+      return node;
+    }
+  }
 
   /**
    * Get the value associated with key.
